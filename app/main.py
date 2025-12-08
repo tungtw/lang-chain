@@ -1,16 +1,31 @@
-from fastapi import FastAPI
-from app.config import settings
+# main.py
+from langchain_core.prompts import PromptTemplate
+from langchain_openai import ChatOpenAI
+import os
+from dotenv import load_dotenv
 
-# Initialize FastAPI app with settings
-app = FastAPI(
-    title=settings.app_name,
-    debug=settings.debug
+# Load environment variables
+load_dotenv()
+api_key = os.getenv("OPENAI_API_KEY")
+
+if not api_key:
+    raise ValueError("OPENAI_API_KEY not found in environment variables.")
+
+# 1. Define the LLM
+llm = ChatOpenAI(
+    model="gpt-4o-mini",
+    temperature=0.7,
+    api_key=api_key  # optional if set in env as OPENAI_API_KEY
 )
 
-@app.get("/")
-async def root():
-    return {"message": f"Welcome to {settings.app_name}"}
+# 2. Create a prompt template
+prompt = PromptTemplate.from_template(
+    "Tell me a {adjective} joke about {topic}."
+)
 
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+# 3. Create a chain using LCEL (LangChain Expression Language)
+chain = prompt | llm  # ✅ This is the modern way
+
+# 4. Run the chain
+result = chain.invoke({"adjective": "funny", "topic": "programming"})
+print(result.content)  # ✅ Use .content, not ["text"]
