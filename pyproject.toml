@@ -18,18 +18,33 @@ dependencies = [
     "python-dotenv>=1.0.0",
     "pydantic-settings>=2.0.0",
     "fastapi>=0.100.0",
-    "uvicorn>=0.20.0",
+    "uvicorn[standard]>=0.20.0",  # keep [standard] for reload, etc.
     "requests>=2.28.0",
     "tiktoken>=0.5.0",
+    "httpx>=0.24.0",              # used by LangChain & OpenAI
+    "tqdm>=4.62.0",               # progress bars
+    "sentence-transformers>=2.2.0",  # for local embeddings (e.g., with Chroma)
+    "pydantic>=2.0.0",
 ]
 
 [project.optional-dependencies]
+# For development
 dev = [
     "pytest>=7.0.0",
     "black>=23.0.0",
     "flake8>=6.0.0",
     "mypy>=1.0.0",
+    "ipython",
 ]
+
+# Optional: Add local LLM support (100% offline)
+local = [
+    "langchain-ollama",           # for Ollama integration
+    "huggingface-hub",            # for sentence-transformers & models
+]
+
+# Install all: pip install -e .[dev,local]
+all = ["my-langchain-app[dev,local]"]
 
 [tool.setuptools.packages.find]
 where = ["."]
