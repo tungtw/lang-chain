@@ -1,7 +1,3 @@
-"""
-Docstring for app.memory-fastApi
-"""
-
 from fastapi import FastAPI, HTTPException
 from langchain_community.chat_message_histories import ChatMessageHistory
 from langchain_core.chat_history import BaseChatMessageHistory
@@ -11,13 +7,6 @@ from langchain_openai import ChatOpenAI
 from pydantic import BaseModel
 
 from app.config import settings
-
-# Load environment variables
-# load_dotenv()
-# api_key = os.getenv("OPENAI_API_KEY")
-
-# if not api_key:
-#     raise ValueError("OPENAI_API_KEY not found in environment variables.")
 
 # Initialize LLM (e.g., gpt-4o-mini)
 llm = ChatOpenAI(

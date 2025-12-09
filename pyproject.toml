@@ -39,7 +39,8 @@ ignore-paths = ["venv", ".git", "docs"]
 # Disable unnecessary warnings (optional but helpful)
 disable = [
     "C0114", # Missing module docstring
-    "C0115", #missing-class-docstring
+    "C0115", # missing-class-docstring
+    "E0015", # Unrecognized option found: paths
     ## "C0411", # wrong-import-order
     "C0116", # Missing function docstring
     "W0511", # TODO comments
