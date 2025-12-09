@@ -12,9 +12,9 @@ readme = "README.md"
 requires-python = ">=3.9"
 dependencies = [
     "langchain>=0.2.0",
+    "langchain-community>=0.2.0",   # provides ChatMessageHistory
     "langchain-openai>=0.1.0",
     "langchain-ollama>=0.1.0",
-    "langchain-community>=0.2.0",   # provides ChatMessageHistory
     "chromadb>=0.4.0",
     "python-dotenv>=1.0.0",
     "pydantic-settings>=2.0.0",
@@ -31,20 +31,29 @@ dependencies = [
 [tool.pylint.main]
 # Add project root to Pylint's module search path (fixes "import could not be resolved")
 init-hook = "import sys; sys.path.append('.')"
+paths = ["app", "tests"]
+ignore-paths = ["venv", ".git", "docs"]
+
+[tool.pylint.messages_control]
+# 允许的错误/警告级别（可根据需求调整）
 # Disable unnecessary warnings (optional but helpful)
 disable = [
     "C0114", # Missing module docstring
+    "C0115", #missing-class-docstring
+    ## "C0411", # wrong-import-order
     "C0116", # Missing function docstring
-    "W0511",
-    # TODO comments
+    "W0511", # TODO comments
+    "R0903", # 忽略"类只有少量方法"（适合工具类/配置类）
 ]
 
 [tool.pylint.format]
 max-line-length = 120
+indent-string = "    " # 缩进用4个空格
 
 [tool.pylint.imports]
 # Allow relative imports (e.g., from .config import settings)
-allow-relative-imports = true
+# allow-relative-imports = true
+allow-any-import-level = true # 允许任意层级的导入
 
 [project.optional-dependencies]
 # For development
