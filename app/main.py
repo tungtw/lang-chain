@@ -1,8 +1,12 @@
+'''
+Docstring for app.main
+'''
 # main.py
+import os
 from langchain_core.prompts import PromptTemplate
 from langchain_openai import ChatOpenAI
-import os
 from dotenv import load_dotenv
+from app.config import settings
 
 # Load environment variables
 load_dotenv()
@@ -13,7 +17,7 @@ if not api_key:
 
 # 1. Define the LLM
 llm = ChatOpenAI(
-    model="gpt-4o-mini",
+    model=settings.llm_model_name, #"gpt-4o-mini",
     temperature=0.7,
     api_key=api_key  # optional if set in env as OPENAI_API_KEY
 )

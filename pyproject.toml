@@ -6,10 +6,10 @@ build-backend = "setuptools.build_meta"
 name = "my-langchain-app"
 version = "0.1.0"
 description = "A LangChain application for building LLM-powered tools and services"
-authors = [{name = "Your Name", email = "your.email@example.com"}]
-license = {text = "MIT"}
+authors = [{ name = "Your Name", email = "your.email@example.com" }]
+license = { text = "MIT" }
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 dependencies = [
     "langchain>=0.1.0",
     "langchain-openai>=0.1.0",
@@ -18,14 +18,32 @@ dependencies = [
     "python-dotenv>=1.0.0",
     "pydantic-settings>=2.0.0",
     "fastapi>=0.100.0",
-    "uvicorn[standard]>=0.20.0",  # keep [standard] for reload, etc.
+    "uvicorn[standard]>=0.20.0",    # keep [standard] for reload, etc.
     "requests>=2.28.0",
     "tiktoken>=0.5.0",
-    "httpx>=0.24.0",              # used by LangChain & OpenAI
-    "tqdm>=4.62.0",               # progress bars
-    "sentence-transformers>=2.2.0",  # for local embeddings (e.g., with Chroma)
+    "httpx>=0.24.0",                # used by LangChain & OpenAI
+    "tqdm>=4.62.0",                 # progress bars
+    "sentence-transformers>=2.2.0", # for local embeddings (e.g., with Chroma)
     "pydantic>=2.0.0",
 ]
+
+[tool.pylint.main]
+# Add project root to Pylint's module search path (fixes "import could not be resolved")
+init-hook = "import sys; sys.path.append('.')"
+# Disable unnecessary warnings (optional but helpful)
+disable = [
+    "C0114", # Missing module docstring
+    "C0116", # Missing function docstring
+    "W0511",
+    # TODO comments
+]
+
+[tool.pylint.format]
+max-line-length = 120
+
+[tool.pylint.imports]
+# Allow relative imports (e.g., from .config import settings)
+allow-relative-imports = true
 
 [project.optional-dependencies]
 # For development
@@ -36,13 +54,12 @@ dev = [
     "mypy>=1.0.0",
     "ipython",
 ]
-
 # Optional: Add local LLM support (100% offline)
 local = [
-    "langchain-ollama",           # for Ollama integration
-    "huggingface-hub",            # for sentence-transformers & models
-]
+    "langchain-ollama", # for Ollama integration
+    "huggingface-hub",  # for sentence-transformers & models
 
+]
 # Install all: pip install -e .[dev,local]
 all = ["my-langchain-app[dev,local]"]
 
