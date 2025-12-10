@@ -1,12 +1,14 @@
-'''
+"""
 Docstring for app.main
-'''
+"""
+
 # main.py
 import os
+
+from config import settings
+from dotenv import load_dotenv
 from langchain_core.prompts import PromptTemplate
 from langchain_openai import ChatOpenAI
-from dotenv import load_dotenv
-from app.config import settings
 
 # Load environment variables
 load_dotenv()
@@ -17,15 +19,13 @@ if not api_key:
 
 # 1. Define the LLM
 llm = ChatOpenAI(
-    model=settings.llm_model_name, #"gpt-4o-mini",
+    model=settings.llm_model_name,  # "gpt-4o-mini",
     temperature=0.7,
-    api_key=api_key  # optional if set in env as OPENAI_API_KEY
+    api_key=api_key,  # optional if set in env as OPENAI_API_KEY
 )
 
 # 2. Create a prompt template
-prompt = PromptTemplate.from_template(
-    "Tell me a {adjective} joke about {topic}."
-)
+prompt = PromptTemplate.from_template("Tell me a {adjective} joke about {topic}.")
 
 # 3. Create a chain using LCEL (LangChain Expression Language)
 chain = prompt | llm  # ✅ This is the modern way

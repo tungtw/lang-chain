@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=45", "wheel"]
+requires = ["setuptools>=61.0.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -26,12 +26,14 @@ dependencies = [
     "tqdm>=4.62.0",                 # progress bars
     "sentence-transformers>=2.2.0", # for local embeddings (e.g., with Chroma)
     "pydantic>=2.0.0",
+    "redis>=5.0.0",
+    "langchain-redis>=0.1.0",       # provides RedisChatMessageHistory
 ]
 
 [tool.pylint.main]
 # Add project root to Pylint's module search path (fixes "import could not be resolved")
 init-hook = "import sys; sys.path.append('.')"
-paths = ["app", "tests"]
+paths = ["langchain_app", "tests"]
 ignore-paths = ["venv", ".git", "docs"]
 
 [tool.pylint.messages_control]
@@ -76,4 +78,4 @@ all = ["my-langchain-app[dev,local]"]
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["app*"]
+include = ["langchain_app*"]

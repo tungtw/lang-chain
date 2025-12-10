@@ -1,16 +1,23 @@
 """
 Tests for utility functions
 """
-import pytest
+
 import os
-from app.utils import chunk_text, is_supported_document_type, get_file_extension
+
+import pytest
+
+from langchain_app.utils import (
+    chunk_text,
+    get_file_extension,
+    is_supported_document_type,
+)
 
 
 def test_chunk_text():
     """Test text chunking function"""
     text = "This is a sample text. " * 100  # Create a long text
     chunks = chunk_text(text, chunk_size=50, overlap=10)
-    
+
     assert len(chunks) > 0
     assert all(len(chunk) <= 50 for chunk in chunks)
 
